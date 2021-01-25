@@ -1,10 +1,12 @@
 package org.example;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.jupiter.api.AfterAll;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.util.concurrent.TimeUnit;
 
@@ -15,11 +17,11 @@ public class ResourcesAccessTest {
 
     @BeforeClass
     public static void setup() {
-        System.setProperty("webdriver.firefox.driver", ConfProperties.getProperty("geckodriver"));
+        System.setProperty("webdriver.gecko.driver", ConfProperties.getProperty("geckodriver"));
 
         homePage = new HomePage(driver);
         resultsPage = new ResultsPage(driver);
-        driver = new FirefoxDriver();
+        driver = new ChromeDriver();
 
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -27,9 +29,13 @@ public class ResourcesAccessTest {
     }
 
     @Test
-    public void ResourcesAccessTest() {
-
+    public void resourcesAccessTest() {
+        homePage.inputSearchString(ConfProperties.getProperty("searchString"));
+        homePage.clickSearchButton();
+        resultsPage.clickFirstResult();
+        Assert.assertTrue(driver.findElements(By.id("relatedresouces_articleview_docs")).size() > 0);
     }
+
     @AfterAll
     public static void tearDown() {
         driver.quit();
