@@ -4,18 +4,16 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.jupiter.api.AfterAll;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class ResourcesAccessTest {
     public static HomePage homePage;
     public static ResultsPage resultsPage;
+    public static QuickStartsResultsPage quickStartsResultsPage;
     public static FirstResultPage firstResultPage;
     public static WebDriver driver;
 
@@ -26,6 +24,7 @@ public class ResourcesAccessTest {
         driver = new ChromeDriver();
         homePage = new HomePage(driver);
         resultsPage = new ResultsPage(driver);
+        quickStartsResultsPage = new QuickStartsResultsPage(driver);
         firstResultPage = new FirstResultPage(driver);
 
         driver.manage().window().maximize();
@@ -36,12 +35,13 @@ public class ResourcesAccessTest {
     @Test
     public void resourcesAccessTest() throws IOException {
         homePage.inputSearchString(ConfProperties.getProperty("searchString"));
-        resultsPage.clickFirstResult();
+        resultsPage.clickShowMore();
+        resultsPage.clickQuickStarts();
+        quickStartsResultsPage.clickFirstResult();
 
-        List<WebElement> resources = driver.findElements(By.id("relatedresources_articleview_docs"));
-        Assert.assertTrue(resources.size() > 0);
-
-        Assert.assertTrue(firstResultPage.clickFirstRelatedResourceLink());
+        Assert.assertTrue(firstResultPage.isResourcesBlockPresent());
+        Assert.assertTrue(firstResultPage.isFirstRelatedResourceLinkOK());
+        firstResultPage.clickFirstRelatedResource();
     }
 
     @AfterAll

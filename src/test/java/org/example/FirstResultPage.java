@@ -9,6 +9,7 @@ import org.openqa.selenium.By;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 
 public class  FirstResultPage{
     public WebDriver driver;
@@ -22,17 +23,22 @@ public class  FirstResultPage{
     private WebElement firstRelatedResourceLink;
     private String linkUrl;
 
-    public boolean clickFirstRelatedResourceLink() throws IOException {
+    public boolean isResourcesBlockPresent() {
+        List<WebElement> resources = driver.findElements(By.id("relatedresources_articleview_docs"));
+        return resources.size() > 0;
+    }
+
+    public boolean isFirstRelatedResourceLinkOK() throws IOException {
         this.linkUrl = firstRelatedResourceLink.getAttribute("href");
         URL obj = new URL(this.linkUrl);
         HttpURLConnection con;
         con = (HttpURLConnection) obj.openConnection();
         con.setRequestMethod("GET");
         int responseCode = con.getResponseCode();
-        if (responseCode == HttpURLConnection.HTTP_OK) {
-            firstRelatedResourceLink.click();
-            return true;
-        } // success
-        return false;
+        return responseCode == HttpURLConnection.HTTP_OK;
+    }
+
+    public void clickFirstRelatedResource() {
+        firstRelatedResourceLink.click();
     }
 }
