@@ -9,6 +9,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -33,13 +34,14 @@ public class ResourcesAccessTest {
     }
 
     @Test
-    public void resourcesAccessTest() {
+    public void resourcesAccessTest() throws IOException {
         homePage.inputSearchString(ConfProperties.getProperty("searchString"));
         resultsPage.clickFirstResult();
-        firstResultPage.clickFirstRelatedResourceLink();
 
         List<WebElement> resources = driver.findElements(By.id("relatedresources_articleview_docs"));
         Assert.assertTrue(resources.size() > 0);
+
+        Assert.assertTrue(firstResultPage.clickFirstRelatedResourceLink());
     }
 
     @AfterAll

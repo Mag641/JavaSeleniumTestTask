@@ -4,7 +4,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.By;
 
 public class HomePage {
     public WebDriver driver;
@@ -17,7 +16,6 @@ public class HomePage {
     @FindBy(xpath = "//div[@class='magic-box-input']//input")
     private WebElement searchField;
 
-    // @FindBy(xpath = "//a[@class='CoveoSearchButton coveo-accessible-button']")
     @FindBy(xpath = "/html/body/div[1]/div[1]/div/div/help-home/tds-portal-header/div/div/div/div/div[2]/div/tds-header-search/div/div/div/a")
     private WebElement searchButton;
 
@@ -29,11 +27,4 @@ public class HomePage {
     public void clickSearchButton() {
         searchButton.click();
     }
-
-    /*
-    {
-        assert driver != null;
-        searchField = driver.findElement(By.className("magic-box-input")).findElement(By.cssSelector("input"));
-    }
-     */
 }

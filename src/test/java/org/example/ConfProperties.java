@@ -15,7 +15,6 @@ public class ConfProperties {
             PROPERTIES.load(fileInputStream);
         } catch (IOException e) {
             e.printStackTrace();
-            //обработка возможного исключения (нет файла и т.п.)
         } finally {
             if (fileInputStream != null)
                 try {
@@ -25,10 +24,6 @@ public class ConfProperties {
                 }
         }
     }
-
-    /**
-     * метод для возврата строки со значением из файла с настройками
-     */
     public static String getProperty(String key) {
         return PROPERTIES.getProperty(key);
     }
