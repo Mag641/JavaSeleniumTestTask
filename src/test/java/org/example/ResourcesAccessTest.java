@@ -15,6 +15,7 @@ import java.util.concurrent.TimeUnit;
 public class ResourcesAccessTest {
     public static HomePage homePage;
     public static ResultsPage resultsPage;
+    public static FirstResultPage firstResultPage;
     public static WebDriver driver;
 
     @BeforeClass
@@ -24,6 +25,7 @@ public class ResourcesAccessTest {
         driver = new ChromeDriver();
         homePage = new HomePage(driver);
         resultsPage = new ResultsPage(driver);
+        firstResultPage = new FirstResultPage(driver);
 
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
@@ -33,8 +35,9 @@ public class ResourcesAccessTest {
     @Test
     public void resourcesAccessTest() {
         homePage.inputSearchString(ConfProperties.getProperty("searchString"));
-        // homePage.clickSearchButton();
         resultsPage.clickFirstResult();
+        firstResultPage.clickFirstRelatedResourceLink();
+
         List<WebElement> resources = driver.findElements(By.id("relatedresources_articleview_docs"));
         Assert.assertTrue(resources.size() > 0);
     }
