@@ -19,8 +19,6 @@ public class ResourcesAccessTest {
 
     @BeforeClass
     public static void setup() {
-        System.setProperty("webdriver.gecko.driver", ConfProperties.getProperty("geckodriver"));
-
         driver = new ChromeDriver();
         homePage = new HomePage(driver);
         resultsPage = new ResultsPage(driver);
